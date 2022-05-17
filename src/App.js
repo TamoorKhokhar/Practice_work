@@ -1,25 +1,77 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "./theme";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import DenseAppBar from "./Appbar";
+import Typography from "@mui/material/Typography";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <ThemeProvider theme={theme}>
+        <DenseAppBar />
+        <Grid
+          container
+          sx={{
+            backgroundColor: "succes.main",
+
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          
+          <Grid
+            container
+            maxWidth={"sm"}
+            sx={{
+              marginTop: "48px",
+              marginBottom: "48px",
+            }}
+          >
+            <Grid
+              item
+              xs={12}
+              sx={{
+                backgroundColor: "succes.main",
+                border: "2px solid rgba(0, 0, 0, 0.12)",
+
+                height: "681px",
+              }}
+            >
+              <Box component="span">
+                <Typography variant="h6">Checkout</Typography>
+              </Box>
+              <Box
+                sx={{
+                  height: "470px",
+                }}
+              ></Box>
+              <Grid
+                xs={12}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  marginRight: "20px",
+                }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "success.dark",
+                    color: "success.light",
+                  }}
+                >
+                  NEXT
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </ThemeProvider>
+    </>
   );
-}
+};
 
 export default App;
