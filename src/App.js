@@ -8,12 +8,16 @@ import DenseAppBar from "./Appbar";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
 
 const App = () => {
   return (
     <>
+      <DenseAppBar />
       <ThemeProvider theme={theme}>
-        <DenseAppBar />
+      
         <Grid
           container
           sx={{
@@ -41,12 +45,34 @@ const App = () => {
               <Box component="span">
                 <Typography variant="h6">Checkout</Typography>
               </Box>
-
+               
               <Box
-                sx={{
-                  height: "max-content",
-                }}
+                
               >
+                <Grid item xs={12} sx={{
+                  paddingRight:'3%',
+                  paddingLeft:'3%',
+                  margin:'5%',
+                }}>
+                <Stepper activeStep={0} >
+              
+                  <Step >
+                    <StepLabel>
+                    Shipping address
+                    </StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>
+                    Payment details
+                    </StepLabel>
+                  </Step>
+                  <Step>
+                    <StepLabel>
+                    Review your order
+                    </StepLabel>
+                  </Step>
+                </Stepper>
+                </Grid>
                 <Typography variant="h4">Shipping address</Typography>
 
                 <Grid
@@ -229,7 +255,10 @@ const App = () => {
                       variant="filled"
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sx={{
+                        display:'flex',
+                       
+                      }}>
                     <Checkbox
                       defaultChecked
                       color="secondary"

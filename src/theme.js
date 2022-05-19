@@ -3,7 +3,8 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#ede7f6",
+    main: "#2196f3",
+    dark: "#2196f3",
     },
     success: {
       main: "#fafafa ",
@@ -48,10 +49,11 @@ const theme = createTheme({
     },
     text: {
       fontWeight: "500",
-      fontSize: "1.25rem",
-      lineHeight: "3",
+      fontSize: "1.3rem",
+      lineHeight: "3.5",
       letterSpacing: "0.0075em",
       fontFamily: "inter",
+      
     },
   },
 });
