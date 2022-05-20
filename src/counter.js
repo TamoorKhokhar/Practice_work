@@ -1,47 +1,19 @@
- import React from 'react';
-import { makeStyles } from '@mui/material/styles';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import StepLabel from '@mui/material/StepLabel';
-
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-  },
-  button: {
-    marginRight: theme.spacing(1),
-  },
-  instructions: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
-  },
-}));
-
-function getSteps() {
-  return ['Select campaign settings', 'Create an ad group', 'Create an ad'];
-}
-
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return 'Select campaign settings...';
-    case 1:
-      return 'What is an ad group anyways?';
-    case 2:
-      return 'This is the bit I really care about!';
-    default:
-      return 'Unknown step';
-  }
-}
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Stepper from "@mui/material/Stepper";
+import Step from "@mui/material/Step";
+import StepLabel from "@mui/material/StepLabel";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import ShippingAddress from "./shippingAddress";
+import Grid from "@mui/material/Grid";
+import PaymentMethod from "./paymentMethod";
+import OrderSummary from "./orderSummary";
+const steps = ["Shipping address", "Payment details", "Review your order"];
 
 export default function HorizontalLinearStepper() {
-  const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
-  const steps = getSteps();
 
   const isStepOptional = (step) => {
     return step === 1;
@@ -86,13 +58,13 @@ export default function HorizontalLinearStepper() {
   };
 
   return (
-    <div className={classes.root}>
+    <Box sx={{ width: "100%" }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
           if (isStepOptional(index)) {
-            labelProps.optional = <Typography variant="caption">Optional</Typography>;
+            labelProps.optional = <Typography variant="caption"></Typography>;
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
@@ -104,46 +76,92 @@ export default function HorizontalLinearStepper() {
           );
         })}
       </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
-            </Typography>
-            <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button>
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                Back
-              </Button>
-              {isStepOptional(activeStep) && (
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSkip}
-                  className={classes.button}
-                >
-                  Skip
-                </Button>
-              )}
+      {activeStep === steps.length - 3 && (
+        <React.Fragment>
+          <Typography sx={{ mt: 2, mb: 1 }}>
+            <ShippingAddress />
+          </Typography>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginRight: "10px",
+            }}
+          >
+          <Button onClick={handleNext}
+           variant="contained">
+            Next
+          </Button>
+          </Grid>
+        </React.Fragment>
+      )}
+      {activeStep === steps.length - 2 && (
+        <React.Fragment>
+          <Typography sx={{ mt: 2, mb: 1 }}><PaymentMethod/></Typography>
 
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleNext}
-                className={classes.button}
-              >
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+          <Grid
+            item
+            xs={12}
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              marginRight: "10px",
+            }}
+          >
+            <Button
+             
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1, }}
+            >
+              Back
+            </Button>
+            <Button onClick={handleNext}
+            variant="contained"
+            >
+            Next
+          </Button>
+          </Grid>
+         
+        </React.Fragment>
+      )}
+
+      {activeStep === steps.length - 1 && (
+        <React.Fragment>
+          <Typography sx={{ mt: 2, mb: 1 }}>
+          <OrderSummary/>
+          </Typography>
+          <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
+            <Box sx={{ flex: "1 1 auto" }} />
+            <Button
+             
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1, }}
+            >
+              Back
+            </Button>
+            <Button onClick={handleNext}
+             variant="contained">Place Holder</Button>
+          </Box>
+        </React.Fragment>
+      ) }
+
+{activeStep === steps.length && (
+        <React.Fragment>
+          <Box sx={{
+           marginTop:"4%"
+          }}>
+          <Typography variant="text5">Thank you for your order.</Typography>
+          </Box>
+          <Typography variant="text6">Your order number is #2001539. We have emailed 
+          your order confirmation and will send 
+          you an update when your order has shipped.</Typography>
+        </React.Fragment>
+      ) }
+      
+    </Box>
   );
 }
